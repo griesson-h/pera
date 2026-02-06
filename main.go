@@ -49,7 +49,7 @@ func main() {
 		for !rl.WindowShouldClose() {
 			rl.BeginDrawing();
 			warningMessage := "You need to specify input file in console arguments"
-			rl.DrawText(warningMessage, int32(rl.GetScreenWidth()/2) - rl.MeasureText("You need to specify input file in console arguments", 30)/2, int32(rl.GetScreenHeight()/2), 30, rl.Red)
+			rl.DrawText(warningMessage, int32(rl.GetScreenWidth()/2) - rl.MeasureText(warningMessage, 30)/2, int32(rl.GetScreenHeight()/2), 30, rl.Red)
 			rl.EndDrawing();
 		}
 	}
