@@ -33,15 +33,29 @@ func main() {
 		mainFile.fullpath = os.Args[1];
 		pathSlashtokenized := strings.Split(mainFile.fullpath, "/");
 		mainFile.fileName = pathSlashtokenized[len(pathSlashtokenized) - 1];
+		mainFile.data = ReadFile(mainFile.fullpath);
 	} else if len(os.Args) > 2 {
 		fmt.Println("pera: Usage: pera [FILE]")
 		os.Exit(2);
 	}
-	mainFile.data = ReadFile(mainFile.fullpath);
 
 	rl.SetTraceLogLevel(rl.LogError);
+	icon := rl.LoadImage("resources/icon.png");
 	rl.SetConfigFlags(rl.FlagVsyncHint | rl.FlagWindowResizable);
-	rl.InitWindow(WIDTH, HEIGHT, "title");
+	rl.InitWindow(WIDTH, HEIGHT, "pera");
+	rl.SetWindowIcon(*icon);
+
+	if len(os.Args) == 1 {
+		for !rl.WindowShouldClose() {
+			rl.BeginDrawing();
+			warningMessage := "You need to specify input file in console arguments"
+			rl.DrawText(warningMessage, int32(rl.GetScreenWidth()/2) - rl.MeasureText("You need to specify input file in console arguments", 30)/2, int32(rl.GetScreenHeight()/2), 30, rl.Red)
+			rl.EndDrawing();
+		}
+	}
 
 	renderLoop();
+
+	rl.UnloadImage(icon);
+	rl.CloseWindow();
 }
